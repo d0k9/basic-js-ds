@@ -39,7 +39,6 @@ function removeKFromList(l, k) {
   }
   return listItem.next;
 }
-// Check the code below for mistakes
 
 module.exports = {
   removeKFromList
