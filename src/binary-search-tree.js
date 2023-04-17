@@ -24,7 +24,13 @@ class BinarySearchTree {
   }
 
   insertNode(node, newNode) {
-
+    if (newNode.data < node.data) {
+      if (node.left === null) {
+        node.left = newNode;
+      } else {
+        this.insertNode(node.right, newNode);
+      }
+    }
   }
 
   has(data) {
@@ -36,12 +42,41 @@ class BinarySearchTree {
   }
 
   searchNode(node, data) {
-
+    if (node === null) {
+      return null;
+    } else if (data === node.data) {
+      return node;
+    } else if (data < node.data) {
+      return this.searchNode(node.left, data);
+    } else {
+      return this.searchNode(node.right, data);
+    } 
   }
 
   remove(data) {
     this.root = this.removeNode(this.root, data);
   }
+
+  removeNode(node, data) {
+    if (node === null) {
+      return null;
+    } else if (data < node.data){
+      node.left = this.removeNode (node.left, data);
+      return node;
+    } else if (data > node.data){
+      node.right = this.removeNode (node.right, data);
+      return node;
+    } else if (node.left === null) {
+        return node.right;
+    } else if (node.right === null) {
+      return node.left;
+    }
+    const minValue = this.findMinValue(node.right);
+    node.data = minValue;
+    node.right = this.removeNode(node.right, minValue);
+    return node;
+    }
+  
 
   min() {
     if (this.root === null) {
